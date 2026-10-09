@@ -1,0 +1,82 @@
+{
+  "name": "Мой автосервис",
+  "addr": "",
+  "phone": "",
+  "accent": "#EC0618",
+  "posts": 3,
+  "open": 540,
+  "close": 1260,
+  "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "f": {
+    "camera": false,
+    "approve": true,
+    "lamp": true,
+    "history": true,
+    "waitlist": true,
+    "fixprice": true,
+    "chat": true,
+    "storage": true,
+    "plate": false,
+    "voice": true
+  },
+  "cameraUrls": {},
+  "services": [
+    {
+      "id": "to",
+      "n": "ТО и масло",
+      "price": 2500,
+      "min": 60
+    },
+    {
+      "id": "diag",
+      "n": "Диагностика",
+      "price": 1500,
+      "min": 40
+    },
+    {
+      "id": "brakes",
+      "n": "Тормоза",
+      "price": 1800,
+      "min": 60
+    },
+    {
+      "id": "susp",
+      "n": "Подвеска",
+      "price": 1200,
+      "min": 40
+    },
+    {
+      "id": "tire",
+      "n": "Шиномонтаж",
+      "price": 1900,
+      "min": 40,
+      "radius": true
+    },
+    {
+      "id": "align",
+      "n": "Развал-схождение",
+      "price": 2200,
+      "min": 50
+    },
+    {
+      "id": "ac",
+      "n": "Кондиционер",
+      "price": 2800,
+      "min": 50
+    },
+    {
+      "id": "elec",
+      "n": "Автоэлектрика",
+      "price": 1500,
+      "min": 60
+    }
+  ]
+}

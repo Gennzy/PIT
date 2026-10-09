@@ -1,0 +1,8 @@
+'use strict';
+// Trusted server-side provisioning for an independent customer/owner.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const {DatabaseSync}=require('node:sqlite');
+const data=process.env.DATA_DIR||path.resolve(__dirname,'../data'),file=path.join(data,'pit.sqlite');if(!fs.existsSync(file)){console.error('Сначала выполните первый запуск сервера.');process.exit(1);}
+const {NEW_STO_SLUG:slug,NEW_STO_NAME:name,NEW_OWNER_EMAIL:email,NEW_OWNER_PASSWORD:password}=process.env;
+if(!/^[a-z0-9][a-z0-9-]{2,49}$/.test(slug||'')||!name||name.length>80||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email||'')||!password||password.length<10||password.length>128){console.error('Задайте NEW_STO_SLUG, NEW_STO_NAME, NEW_OWNER_EMAIL, NEW_OWNER_PASSWORD (10–128 символов).');process.exit(1);}
+const db=new DatabaseSync(file);db.exec('PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');const id=crypto.randomUUID(),owner=crypto.randomUUID(),salt=crypto.randomBytes(16).toString('hex'),hash=salt+':'+crypto.scryptSync(password,salt,64).toString('hex');const config={...require('./defaults.json'),name};
+try{db.exec('BEGIN IMMEDIATE');db.prepare('INSERT INTO tenants(id,slug,owner_key,config) VALUES(?,?,?,?)').run(id,slug,crypto.randomUUID(),JSON.stringify(config));db.prepare('INSERT INTO users VALUES(?,?,?,?,?,?,?)').run(owner,id,email.toLowerCase().trim(),'Владелец','','owner',hash);db.exec('COMMIT');console.log('Создан независимый сервис: /admin/'+slug+' и /app/'+slug);console.log('Пароль не записывается в вывод. Владелец видит только свои сервисы.');}catch(e){db.exec('ROLLBACK');console.error(e.code?.includes('CONSTRAINT')?'Код СТО уже занят':e.message);process.exitCode=1;}finally{db.close();}

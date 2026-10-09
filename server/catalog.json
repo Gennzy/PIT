@@ -1,0 +1,1618 @@
+[
+  {
+    "id": "rio",
+    "brand": "Kia",
+    "model": "Rio IV",
+    "fromYear": 2017,
+    "toYear": 2023,
+    "image": "img/cars/rio.webp"
+  },
+  {
+    "id": "vesta",
+    "brand": "Lada",
+    "model": "Vesta",
+    "fromYear": 2015,
+    "toYear": 2026,
+    "image": "img/cars/vesta.webp"
+  },
+  {
+    "id": "granta",
+    "brand": "Lada",
+    "model": "Granta",
+    "fromYear": 2011,
+    "toYear": 2026,
+    "image": "img/cars/granta.webp"
+  },
+  {
+    "id": "niva",
+    "brand": "Lada",
+    "model": "Niva Travel",
+    "fromYear": 2021,
+    "toYear": 2026,
+    "image": "img/cars/niva.webp"
+  },
+  {
+    "id": "solaris",
+    "brand": "Hyundai",
+    "model": "Solaris II",
+    "fromYear": 2017,
+    "toYear": 2022,
+    "image": "img/cars/solaris.webp"
+  },
+  {
+    "id": "camry",
+    "brand": "Toyota",
+    "model": "Camry XV70",
+    "fromYear": 2017,
+    "toYear": 2024,
+    "image": "img/cars/camry.webp"
+  },
+  {
+    "id": "lc300",
+    "brand": "Toyota",
+    "model": "Land Cruiser 300",
+    "fromYear": 2021,
+    "toYear": 2026,
+    "image": "img/cars/lc300.webp"
+  },
+  {
+    "id": "jolion",
+    "brand": "Haval",
+    "model": "Jolion",
+    "fromYear": 2020,
+    "toYear": 2026,
+    "image": "img/cars/jolion.webp"
+  },
+  {
+    "id": "sportage",
+    "brand": "Kia",
+    "model": "Sportage V",
+    "fromYear": 2021,
+    "toYear": 2026,
+    "image": "img/cars/sportage.webp"
+  },
+  {
+    "id": "polo",
+    "brand": "Volkswagen",
+    "model": "Polo VI",
+    "fromYear": 2020,
+    "toYear": 2022,
+    "image": "img/cars/polo.webp"
+  },
+  {
+    "id": "octavia",
+    "brand": "Skoda",
+    "model": "Octavia A8",
+    "fromYear": 2020,
+    "toYear": 2026,
+    "image": "img/cars/octavia.webp"
+  },
+  {
+    "id": "monjaro",
+    "brand": "Geely",
+    "model": "Monjaro",
+    "fromYear": 2021,
+    "toYear": 2026,
+    "image": "img/cars/monjaro.webp"
+  },
+  {
+    "id": "tiggo",
+    "brand": "Chery",
+    "model": "Tiggo 7 Pro",
+    "fromYear": 2020,
+    "toYear": 2026,
+    "image": "img/cars/tiggo.webp"
+  },
+  {
+    "id": "x5",
+    "brand": "BMW",
+    "model": "X5 G05",
+    "fromYear": 2018,
+    "toYear": 2026,
+    "image": "img/cars/x5.webp"
+  },
+  {
+    "id": "eclass",
+    "brand": "Mercedes-Benz",
+    "model": "E-Class W213",
+    "fromYear": 2016,
+    "toYear": 2023,
+    "image": "img/cars/eclass.webp"
+  },
+  {
+    "id": "cat-16",
+    "brand": "Lada",
+    "model": "2101 / 2102",
+    "fromYear": 1970,
+    "toYear": 1988,
+    "image": null
+  },
+  {
+    "id": "cat-17",
+    "brand": "Lada",
+    "model": "2103 / 2106",
+    "fromYear": 1972,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-18",
+    "brand": "Lada",
+    "model": "2104 / 2105 / 2107",
+    "fromYear": 1980,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-19",
+    "brand": "Lada",
+    "model": "2108 / 2109 / 21099",
+    "fromYear": 1984,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-20",
+    "brand": "Lada",
+    "model": "2110 / 2111 / 2112",
+    "fromYear": 1995,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-21",
+    "brand": "Lada",
+    "model": "2113 / 2114 / 2115",
+    "fromYear": 1997,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-22",
+    "brand": "Lada",
+    "model": "Kalina I",
+    "fromYear": 2004,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-23",
+    "brand": "Lada",
+    "model": "Kalina II",
+    "fromYear": 2013,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-24",
+    "brand": "Lada",
+    "model": "Priora",
+    "fromYear": 2007,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-25",
+    "brand": "Lada",
+    "model": "Niva 2121 / Legend",
+    "fromYear": 1977,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-26",
+    "brand": "Lada",
+    "model": "Largus",
+    "fromYear": 2012,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-27",
+    "brand": "Toyota",
+    "model": "Corolla E90",
+    "fromYear": 1987,
+    "toYear": 1992,
+    "image": null
+  },
+  {
+    "id": "cat-28",
+    "brand": "Toyota",
+    "model": "Corolla E100",
+    "fromYear": 1991,
+    "toYear": 1998,
+    "image": null
+  },
+  {
+    "id": "cat-29",
+    "brand": "Toyota",
+    "model": "Corolla E110",
+    "fromYear": 1995,
+    "toYear": 2002,
+    "image": null
+  },
+  {
+    "id": "cat-30",
+    "brand": "Toyota",
+    "model": "Corolla E120",
+    "fromYear": 2000,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-31",
+    "brand": "Toyota",
+    "model": "Corolla E150",
+    "fromYear": 2006,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-32",
+    "brand": "Toyota",
+    "model": "Corolla E180",
+    "fromYear": 2012,
+    "toYear": 2019,
+    "image": null
+  },
+  {
+    "id": "cat-33",
+    "brand": "Toyota",
+    "model": "Camry XV20",
+    "fromYear": 1996,
+    "toYear": 2001,
+    "image": null
+  },
+  {
+    "id": "cat-34",
+    "brand": "Toyota",
+    "model": "Camry XV30",
+    "fromYear": 2001,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-35",
+    "brand": "Toyota",
+    "model": "Camry XV40",
+    "fromYear": 2006,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-36",
+    "brand": "Toyota",
+    "model": "Camry XV50",
+    "fromYear": 2011,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-37",
+    "brand": "Toyota",
+    "model": "RAV4 II",
+    "fromYear": 2000,
+    "toYear": 2005,
+    "image": null
+  },
+  {
+    "id": "cat-38",
+    "brand": "Toyota",
+    "model": "RAV4 III",
+    "fromYear": 2005,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-39",
+    "brand": "Toyota",
+    "model": "RAV4 IV",
+    "fromYear": 2012,
+    "toYear": 2019,
+    "image": null
+  },
+  {
+    "id": "cat-40",
+    "brand": "Toyota",
+    "model": "Land Cruiser 80",
+    "fromYear": 1990,
+    "toYear": 1997,
+    "image": null
+  },
+  {
+    "id": "cat-41",
+    "brand": "Toyota",
+    "model": "Land Cruiser 100",
+    "fromYear": 1998,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-42",
+    "brand": "Toyota",
+    "model": "Land Cruiser 200",
+    "fromYear": 2007,
+    "toYear": 2021,
+    "image": null
+  },
+  {
+    "id": "cat-43",
+    "brand": "Toyota",
+    "model": "Mark II X90",
+    "fromYear": 1992,
+    "toYear": 1996,
+    "image": null
+  },
+  {
+    "id": "cat-44",
+    "brand": "Toyota",
+    "model": "Mark II X100",
+    "fromYear": 1996,
+    "toYear": 2000,
+    "image": null
+  },
+  {
+    "id": "cat-45",
+    "brand": "Toyota",
+    "model": "Avensis II",
+    "fromYear": 2003,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-46",
+    "brand": "Toyota",
+    "model": "Yaris II",
+    "fromYear": 2005,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-47",
+    "brand": "Volkswagen",
+    "model": "Golf II",
+    "fromYear": 1983,
+    "toYear": 1992,
+    "image": null
+  },
+  {
+    "id": "cat-48",
+    "brand": "Volkswagen",
+    "model": "Golf III",
+    "fromYear": 1991,
+    "toYear": 1997,
+    "image": null
+  },
+  {
+    "id": "cat-49",
+    "brand": "Volkswagen",
+    "model": "Golf IV",
+    "fromYear": 1997,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-50",
+    "brand": "Volkswagen",
+    "model": "Golf V",
+    "fromYear": 2003,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-51",
+    "brand": "Volkswagen",
+    "model": "Golf VI",
+    "fromYear": 2008,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-52",
+    "brand": "Volkswagen",
+    "model": "Passat B3",
+    "fromYear": 1988,
+    "toYear": 1993,
+    "image": null
+  },
+  {
+    "id": "cat-53",
+    "brand": "Volkswagen",
+    "model": "Passat B4",
+    "fromYear": 1993,
+    "toYear": 1997,
+    "image": null
+  },
+  {
+    "id": "cat-54",
+    "brand": "Volkswagen",
+    "model": "Passat B5 / B5.5",
+    "fromYear": 1996,
+    "toYear": 2005,
+    "image": null
+  },
+  {
+    "id": "cat-55",
+    "brand": "Volkswagen",
+    "model": "Passat B6",
+    "fromYear": 2005,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-56",
+    "brand": "Volkswagen",
+    "model": "Passat B7",
+    "fromYear": 2010,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-57",
+    "brand": "Volkswagen",
+    "model": "Polo Sedan",
+    "fromYear": 2010,
+    "toYear": 2020,
+    "image": null
+  },
+  {
+    "id": "cat-58",
+    "brand": "Volkswagen",
+    "model": "Tiguan I",
+    "fromYear": 2007,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-59",
+    "brand": "Volkswagen",
+    "model": "Tiguan II",
+    "fromYear": 2016,
+    "toYear": 2024,
+    "image": null
+  },
+  {
+    "id": "cat-60",
+    "brand": "Volkswagen",
+    "model": "Touareg I",
+    "fromYear": 2002,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-61",
+    "brand": "BMW",
+    "model": "3 Series E30",
+    "fromYear": 1982,
+    "toYear": 1994,
+    "image": null
+  },
+  {
+    "id": "cat-62",
+    "brand": "BMW",
+    "model": "3 Series E36",
+    "fromYear": 1990,
+    "toYear": 2000,
+    "image": null
+  },
+  {
+    "id": "cat-63",
+    "brand": "BMW",
+    "model": "3 Series E46",
+    "fromYear": 1998,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-64",
+    "brand": "BMW",
+    "model": "3 Series E90",
+    "fromYear": 2005,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-65",
+    "brand": "BMW",
+    "model": "3 Series F30",
+    "fromYear": 2011,
+    "toYear": 2019,
+    "image": null
+  },
+  {
+    "id": "cat-66",
+    "brand": "BMW",
+    "model": "5 Series E34",
+    "fromYear": 1987,
+    "toYear": 1996,
+    "image": null
+  },
+  {
+    "id": "cat-67",
+    "brand": "BMW",
+    "model": "5 Series E39",
+    "fromYear": 1995,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-68",
+    "brand": "BMW",
+    "model": "5 Series E60",
+    "fromYear": 2003,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-69",
+    "brand": "BMW",
+    "model": "5 Series F10",
+    "fromYear": 2010,
+    "toYear": 2017,
+    "image": null
+  },
+  {
+    "id": "cat-70",
+    "brand": "BMW",
+    "model": "X5 E53",
+    "fromYear": 1999,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-71",
+    "brand": "BMW",
+    "model": "X5 E70",
+    "fromYear": 2006,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-72",
+    "brand": "Mercedes-Benz",
+    "model": "190 W201",
+    "fromYear": 1982,
+    "toYear": 1993,
+    "image": null
+  },
+  {
+    "id": "cat-73",
+    "brand": "Mercedes-Benz",
+    "model": "E-Class W124",
+    "fromYear": 1984,
+    "toYear": 1997,
+    "image": null
+  },
+  {
+    "id": "cat-74",
+    "brand": "Mercedes-Benz",
+    "model": "E-Class W210",
+    "fromYear": 1995,
+    "toYear": 2003,
+    "image": null
+  },
+  {
+    "id": "cat-75",
+    "brand": "Mercedes-Benz",
+    "model": "E-Class W211",
+    "fromYear": 2002,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-76",
+    "brand": "Mercedes-Benz",
+    "model": "E-Class W212",
+    "fromYear": 2009,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-77",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class W202",
+    "fromYear": 1993,
+    "toYear": 2000,
+    "image": null
+  },
+  {
+    "id": "cat-78",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class W203",
+    "fromYear": 2000,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-79",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class W204",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-80",
+    "brand": "Mercedes-Benz",
+    "model": "S-Class W140",
+    "fromYear": 1991,
+    "toYear": 1998,
+    "image": null
+  },
+  {
+    "id": "cat-81",
+    "brand": "Mercedes-Benz",
+    "model": "S-Class W220",
+    "fromYear": 1998,
+    "toYear": 2005,
+    "image": null
+  },
+  {
+    "id": "cat-82",
+    "brand": "Ford",
+    "model": "Focus I",
+    "fromYear": 1998,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-83",
+    "brand": "Ford",
+    "model": "Focus II",
+    "fromYear": 2004,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-84",
+    "brand": "Ford",
+    "model": "Focus III",
+    "fromYear": 2010,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-85",
+    "brand": "Ford",
+    "model": "Mondeo III",
+    "fromYear": 2000,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-86",
+    "brand": "Ford",
+    "model": "Mondeo IV",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-87",
+    "brand": "Ford",
+    "model": "Fiesta V",
+    "fromYear": 2002,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-88",
+    "brand": "Ford",
+    "model": "Fusion",
+    "fromYear": 2002,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-89",
+    "brand": "Ford",
+    "model": "Kuga I",
+    "fromYear": 2008,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-90",
+    "brand": "Renault",
+    "model": "Logan I",
+    "fromYear": 2004,
+    "toYear": 2015,
+    "image": null
+  },
+  {
+    "id": "cat-91",
+    "brand": "Renault",
+    "model": "Logan II",
+    "fromYear": 2012,
+    "toYear": 2022,
+    "image": null
+  },
+  {
+    "id": "cat-92",
+    "brand": "Renault",
+    "model": "Sandero I",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-93",
+    "brand": "Renault",
+    "model": "Sandero II",
+    "fromYear": 2012,
+    "toYear": 2022,
+    "image": null
+  },
+  {
+    "id": "cat-94",
+    "brand": "Renault",
+    "model": "Duster I",
+    "fromYear": 2010,
+    "toYear": 2021,
+    "image": null
+  },
+  {
+    "id": "cat-95",
+    "brand": "Renault",
+    "model": "Megane II",
+    "fromYear": 2002,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-96",
+    "brand": "Renault",
+    "model": "Megane III",
+    "fromYear": 2008,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-97",
+    "brand": "Renault",
+    "model": "Symbol",
+    "fromYear": 1999,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-98",
+    "brand": "Hyundai",
+    "model": "Accent LC / ТагАЗ",
+    "fromYear": 1999,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-99",
+    "brand": "Hyundai",
+    "model": "Getz",
+    "fromYear": 2002,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-100",
+    "brand": "Hyundai",
+    "model": "Elantra XD",
+    "fromYear": 2000,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-101",
+    "brand": "Hyundai",
+    "model": "Elantra HD",
+    "fromYear": 2006,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-102",
+    "brand": "Hyundai",
+    "model": "Solaris I",
+    "fromYear": 2010,
+    "toYear": 2017,
+    "image": null
+  },
+  {
+    "id": "cat-103",
+    "brand": "Hyundai",
+    "model": "Tucson I",
+    "fromYear": 2004,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-104",
+    "brand": "Hyundai",
+    "model": "Santa Fe II",
+    "fromYear": 2006,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-105",
+    "brand": "Hyundai",
+    "model": "Creta I",
+    "fromYear": 2015,
+    "toYear": 2021,
+    "image": null
+  },
+  {
+    "id": "cat-106",
+    "brand": "Kia",
+    "model": "Rio II",
+    "fromYear": 2005,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-107",
+    "brand": "Kia",
+    "model": "Rio III",
+    "fromYear": 2011,
+    "toYear": 2017,
+    "image": null
+  },
+  {
+    "id": "cat-108",
+    "brand": "Kia",
+    "model": "Spectra",
+    "fromYear": 2000,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-109",
+    "brand": "Kia",
+    "model": "Ceed I",
+    "fromYear": 2006,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-110",
+    "brand": "Kia",
+    "model": "Ceed II",
+    "fromYear": 2012,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-111",
+    "brand": "Kia",
+    "model": "Sportage II",
+    "fromYear": 2004,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-112",
+    "brand": "Kia",
+    "model": "Sportage III",
+    "fromYear": 2010,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-113",
+    "brand": "Kia",
+    "model": "Sorento I",
+    "fromYear": 2002,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-114",
+    "brand": "Nissan",
+    "model": "Almera N16",
+    "fromYear": 2000,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-115",
+    "brand": "Nissan",
+    "model": "Almera Classic",
+    "fromYear": 2006,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-116",
+    "brand": "Nissan",
+    "model": "Almera G15",
+    "fromYear": 2012,
+    "toYear": 2018,
+    "image": null
+  },
+  {
+    "id": "cat-117",
+    "brand": "Nissan",
+    "model": "Primera P11",
+    "fromYear": 1995,
+    "toYear": 2002,
+    "image": null
+  },
+  {
+    "id": "cat-118",
+    "brand": "Nissan",
+    "model": "Primera P12",
+    "fromYear": 2001,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-119",
+    "brand": "Nissan",
+    "model": "Qashqai J10",
+    "fromYear": 2006,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-120",
+    "brand": "Nissan",
+    "model": "Qashqai J11",
+    "fromYear": 2013,
+    "toYear": 2021,
+    "image": null
+  },
+  {
+    "id": "cat-121",
+    "brand": "Nissan",
+    "model": "X-Trail T30",
+    "fromYear": 2000,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-122",
+    "brand": "Nissan",
+    "model": "X-Trail T31",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-123",
+    "brand": "Nissan",
+    "model": "Tiida C11",
+    "fromYear": 2004,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-124",
+    "brand": "Chevrolet",
+    "model": "Lacetti",
+    "fromYear": 2002,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-125",
+    "brand": "Chevrolet",
+    "model": "Aveo T200 / T250",
+    "fromYear": 2002,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-126",
+    "brand": "Chevrolet",
+    "model": "Cruze J300",
+    "fromYear": 2008,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-127",
+    "brand": "Chevrolet",
+    "model": "Niva",
+    "fromYear": 2002,
+    "toYear": 2020,
+    "image": null
+  },
+  {
+    "id": "cat-128",
+    "brand": "Chevrolet",
+    "model": "Lanos",
+    "fromYear": 2005,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-129",
+    "brand": "Opel",
+    "model": "Astra F",
+    "fromYear": 1991,
+    "toYear": 2002,
+    "image": null
+  },
+  {
+    "id": "cat-130",
+    "brand": "Opel",
+    "model": "Astra G",
+    "fromYear": 1998,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-131",
+    "brand": "Opel",
+    "model": "Astra H",
+    "fromYear": 2004,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-132",
+    "brand": "Opel",
+    "model": "Vectra B",
+    "fromYear": 1995,
+    "toYear": 2002,
+    "image": null
+  },
+  {
+    "id": "cat-133",
+    "brand": "Opel",
+    "model": "Vectra C",
+    "fromYear": 2002,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-134",
+    "brand": "Opel",
+    "model": "Zafira B",
+    "fromYear": 2005,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-135",
+    "brand": "Opel",
+    "model": "Corsa D",
+    "fromYear": 2006,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-136",
+    "brand": "Skoda",
+    "model": "Octavia Tour / A4",
+    "fromYear": 1996,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-137",
+    "brand": "Skoda",
+    "model": "Octavia A5",
+    "fromYear": 2004,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-138",
+    "brand": "Skoda",
+    "model": "Octavia A7",
+    "fromYear": 2012,
+    "toYear": 2020,
+    "image": null
+  },
+  {
+    "id": "cat-139",
+    "brand": "Skoda",
+    "model": "Fabia I",
+    "fromYear": 1999,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-140",
+    "brand": "Skoda",
+    "model": "Fabia II",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-141",
+    "brand": "Skoda",
+    "model": "Rapid",
+    "fromYear": 2012,
+    "toYear": 2022,
+    "image": null
+  },
+  {
+    "id": "cat-142",
+    "brand": "Mitsubishi",
+    "model": "Lancer IX",
+    "fromYear": 2000,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-143",
+    "brand": "Mitsubishi",
+    "model": "Lancer X",
+    "fromYear": 2007,
+    "toYear": 2017,
+    "image": null
+  },
+  {
+    "id": "cat-144",
+    "brand": "Mitsubishi",
+    "model": "Outlander I",
+    "fromYear": 2001,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-145",
+    "brand": "Mitsubishi",
+    "model": "Outlander II",
+    "fromYear": 2006,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-146",
+    "brand": "Mitsubishi",
+    "model": "Pajero III",
+    "fromYear": 1999,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-147",
+    "brand": "Mitsubishi",
+    "model": "Pajero IV",
+    "fromYear": 2006,
+    "toYear": 2021,
+    "image": null
+  },
+  {
+    "id": "cat-148",
+    "brand": "Mazda",
+    "model": "323 BJ",
+    "fromYear": 1998,
+    "toYear": 2003,
+    "image": null
+  },
+  {
+    "id": "cat-149",
+    "brand": "Mazda",
+    "model": "3 BK",
+    "fromYear": 2003,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-150",
+    "brand": "Mazda",
+    "model": "3 BL",
+    "fromYear": 2009,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-151",
+    "brand": "Mazda",
+    "model": "6 GG",
+    "fromYear": 2002,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-152",
+    "brand": "Mazda",
+    "model": "6 GH",
+    "fromYear": 2007,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-153",
+    "brand": "Mazda",
+    "model": "CX-5 I",
+    "fromYear": 2011,
+    "toYear": 2017,
+    "image": null
+  },
+  {
+    "id": "cat-154",
+    "brand": "Audi",
+    "model": "80 B3 / B4",
+    "fromYear": 1986,
+    "toYear": 1996,
+    "image": null
+  },
+  {
+    "id": "cat-155",
+    "brand": "Audi",
+    "model": "100 C4",
+    "fromYear": 1990,
+    "toYear": 1994,
+    "image": null
+  },
+  {
+    "id": "cat-156",
+    "brand": "Audi",
+    "model": "A4 B5",
+    "fromYear": 1994,
+    "toYear": 2001,
+    "image": null
+  },
+  {
+    "id": "cat-157",
+    "brand": "Audi",
+    "model": "A4 B6",
+    "fromYear": 2000,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-158",
+    "brand": "Audi",
+    "model": "A4 B7",
+    "fromYear": 2004,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-159",
+    "brand": "Audi",
+    "model": "A6 C5",
+    "fromYear": 1997,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-160",
+    "brand": "Audi",
+    "model": "A6 C6",
+    "fromYear": 2004,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-161",
+    "brand": "Peugeot",
+    "model": "206",
+    "fromYear": 1998,
+    "toYear": 2012,
+    "image": null
+  },
+  {
+    "id": "cat-162",
+    "brand": "Peugeot",
+    "model": "307",
+    "fromYear": 2001,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-163",
+    "brand": "Peugeot",
+    "model": "308 I",
+    "fromYear": 2007,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-164",
+    "brand": "Peugeot",
+    "model": "406",
+    "fromYear": 1995,
+    "toYear": 2004,
+    "image": null
+  },
+  {
+    "id": "cat-165",
+    "brand": "Peugeot",
+    "model": "408",
+    "fromYear": 2010,
+    "toYear": 2022,
+    "image": null
+  },
+  {
+    "id": "cat-166",
+    "brand": "Citroen",
+    "model": "C4 I",
+    "fromYear": 2004,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-167",
+    "brand": "Citroen",
+    "model": "C4 II",
+    "fromYear": 2010,
+    "toYear": 2020,
+    "image": null
+  },
+  {
+    "id": "cat-168",
+    "brand": "Citroen",
+    "model": "C5 I",
+    "fromYear": 2001,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-169",
+    "brand": "УАЗ",
+    "model": "469 / Hunter",
+    "fromYear": 1972,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-170",
+    "brand": "УАЗ",
+    "model": "Patriot",
+    "fromYear": 2005,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-171",
+    "brand": "УАЗ",
+    "model": "452 / Буханка",
+    "fromYear": 1965,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-172",
+    "brand": "ГАЗ",
+    "model": "Волга 24",
+    "fromYear": 1970,
+    "toYear": 1992,
+    "image": null
+  },
+  {
+    "id": "cat-173",
+    "brand": "ГАЗ",
+    "model": "Волга 3102",
+    "fromYear": 1982,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-174",
+    "brand": "ГАЗ",
+    "model": "Волга 3110 / 31105",
+    "fromYear": 1997,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-175",
+    "brand": "ГАЗ",
+    "model": "ГАЗель",
+    "fromYear": 1994,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-176",
+    "brand": "ГАЗ",
+    "model": "ГАЗель Бизнес",
+    "fromYear": 2010,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-177",
+    "brand": "Daewoo",
+    "model": "Nexia",
+    "fromYear": 1994,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-178",
+    "brand": "Daewoo",
+    "model": "Matiz",
+    "fromYear": 1998,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-179",
+    "brand": "Subaru",
+    "model": "Forester SG",
+    "fromYear": 2002,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-180",
+    "brand": "Subaru",
+    "model": "Forester SH",
+    "fromYear": 2007,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-181",
+    "brand": "Subaru",
+    "model": "Impreza GD / GG",
+    "fromYear": 2000,
+    "toYear": 2007,
+    "image": null
+  },
+  {
+    "id": "cat-182",
+    "brand": "Subaru",
+    "model": "Legacy BL / BP",
+    "fromYear": 2003,
+    "toYear": 2009,
+    "image": null
+  },
+  {
+    "id": "cat-183",
+    "brand": "Honda",
+    "model": "Civic VII",
+    "fromYear": 2000,
+    "toYear": 2005,
+    "image": null
+  },
+  {
+    "id": "cat-184",
+    "brand": "Honda",
+    "model": "Civic VIII",
+    "fromYear": 2005,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-185",
+    "brand": "Honda",
+    "model": "Accord VII",
+    "fromYear": 2002,
+    "toYear": 2008,
+    "image": null
+  },
+  {
+    "id": "cat-186",
+    "brand": "Honda",
+    "model": "Accord VIII",
+    "fromYear": 2008,
+    "toYear": 2013,
+    "image": null
+  },
+  {
+    "id": "cat-187",
+    "brand": "Honda",
+    "model": "CR-V II",
+    "fromYear": 2001,
+    "toYear": 2006,
+    "image": null
+  },
+  {
+    "id": "cat-188",
+    "brand": "Honda",
+    "model": "CR-V III",
+    "fromYear": 2006,
+    "toYear": 2011,
+    "image": null
+  },
+  {
+    "id": "cat-189",
+    "brand": "Suzuki",
+    "model": "Grand Vitara II",
+    "fromYear": 2005,
+    "toYear": 2015,
+    "image": null
+  },
+  {
+    "id": "cat-190",
+    "brand": "Suzuki",
+    "model": "SX4 I",
+    "fromYear": 2006,
+    "toYear": 2014,
+    "image": null
+  },
+  {
+    "id": "cat-191",
+    "brand": "Chery",
+    "model": "Amulet",
+    "fromYear": 2003,
+    "toYear": 2010,
+    "image": null
+  },
+  {
+    "id": "cat-192",
+    "brand": "Chery",
+    "model": "Tiggo T11",
+    "fromYear": 2005,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-193",
+    "brand": "Chery",
+    "model": "Tiggo 4",
+    "fromYear": 2017,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-194",
+    "brand": "Chery",
+    "model": "Tiggo 8 Pro",
+    "fromYear": 2021,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-195",
+    "brand": "Geely",
+    "model": "Emgrand EC7",
+    "fromYear": 2009,
+    "toYear": 2016,
+    "image": null
+  },
+  {
+    "id": "cat-196",
+    "brand": "Geely",
+    "model": "Atlas",
+    "fromYear": 2016,
+    "toYear": 2023,
+    "image": null
+  },
+  {
+    "id": "cat-197",
+    "brand": "Geely",
+    "model": "Coolray",
+    "fromYear": 2018,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-198",
+    "brand": "Haval",
+    "model": "F7",
+    "fromYear": 2019,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-199",
+    "brand": "Haval",
+    "model": "H6",
+    "fromYear": 2011,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-200",
+    "brand": "Omoda",
+    "model": "C5",
+    "fromYear": 2022,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-201",
+    "brand": "Changan",
+    "model": "CS35 Plus",
+    "fromYear": 2018,
+    "toYear": 2026,
+    "image": null
+  },
+  {
+    "id": "cat-202",
+    "brand": "Changan",
+    "model": "CS55 Plus",
+    "fromYear": 2019,
+    "toYear": 2026,
+    "image": null
+  }
+]

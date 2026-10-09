@@ -1,0 +1,7 @@
+data
+node_modules
+.env
+customer.env
+.git
+*.log
+tests
