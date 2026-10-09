@@ -7,4 +7,7 @@ public/
 data/
 *.sqlite*
 .vercel/
+.vercel
 *.log
+.env.local
+.env*.local
