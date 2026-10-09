@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "node scripts/build.js",
+    "check:db": "node --env-file-if-exists=.env.local scripts/check-db.js",
     "test": "node --test tests/*.test.js",
     "provision": "node server/provision.js"
   },
