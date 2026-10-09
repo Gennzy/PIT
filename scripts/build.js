@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path');const r=path.resolve(__dirname,'..');fs.rmSync(path.join(r,'public'),{recursive:true,force:true});fs.mkdirSync(path.join(r,'public/assets'),{recursive:true});fs.cpSync(path.join(r,'pit'),path.join(r,'public/assets'),{recursive:true});console.log('Static assets ready.');

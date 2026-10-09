@@ -1,4 +1,10 @@
-data/
-node_modules/
 .env
+.env.*
+!.env.example
+!customer.env.example
+node_modules/
+public/
+data/
+*.sqlite*
+.vercel/
 *.log

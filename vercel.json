@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "{pit,server}/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index?_pit_path=/api/:path*"
+    },
+    {
+      "source": "/app/:sto",
+      "destination": "/api/index?_pit_path=/app/:sto"
+    },
+    {
+      "source": "/admin/:sto",
+      "destination": "/api/index?_pit_path=/admin/:sto"
+    },
+    {
+      "source": "/history/:token",
+      "destination": "/api/index?_pit_path=/history/:token"
+    },
+    {
+      "source": "/qr",
+      "destination": "/api/index?_pit_path=/qr"
+    },
+    {
+      "source": "/",
+      "destination": "/api/index?_pit_path=/"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/sw.js",
+      "headers": [
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}
