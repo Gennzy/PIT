@@ -27,12 +27,16 @@
 | SUPABASE_URL | https://ogbompjdfoawhjjscqjc.supabase.co |
 | SUPABASE_SECRET_KEY | Серверный Secret key из Settings → API Keys, либо legacy service_role. Не anon/publishable. |
 | SUPABASE_STORAGE_BUCKET | pit-photos |
+| NEXT_PUBLIC_SUPABASE_URL | https://ogbompjdfoawhjjscqjc.supabase.co — только если фронтенд обращается к Supabase напрямую |
+| NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Publishable key (sb_publishable_…) из Settings → API Keys. Это аналог старого anon-ключа: он публичный по назначению, но задавайте его в Vercel Environment Variables, а не в коде |
 | PUBLIC_ORIGIN | Фактический https://…vercel.app без конечного слеша |
 | AUTH_RATE_SECRET | Случайная секретная строка не менее 32 символов |
 
 Секреты НЕ размещать в GitHub, frontend, NEXT_PUBLIC_* или чате. Пароль базы — не пароль от входа Supabase. Проверка TLS включена: если подключение требует официальный CA Supabase, задайте PG_CA_CERT из настроек проекта; TLS не отключайте.
 
 Ключ SUPABASE_SECRET_KEY включает сохранение новых фото в приватном Storage с авторизованной выдачей через сервер. Без этого ключа фото реально сохраняются в PostgreSQL, но расходуют лимит базы. Старые фото при переключении не исчезают.
+
+Пакеты `@supabase/supabase-js` и `@supabase/ssr` установлены, но код пока их не импортирует: вся работа идёт через собственный сервер на `pg`. Учтите, что префикс `NEXT_PUBLIC_` инлайнит только бандлер Next.js, а здесь фронтенд — статические `pit/*.js`, которые `scripts/build.js` копирует в `public/` без сборки. Если фронтенду понадобится Supabase напрямую, значение нужно отдавать явно: через существующий `/api/public` или собственной подстановкой в `scripts/build.js`. Публикацию `SUPABASE_SECRET_KEY` в браузер делать нельзя.
 
 ## Доступ и эксплуатация
 

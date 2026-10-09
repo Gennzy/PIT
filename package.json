@@ -12,6 +12,8 @@
     "provision": "node server/provision.js"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3",
     "pg": "8.16.3"
   }
 }
