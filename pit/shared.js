@@ -39,3 +39,11 @@ const UI_GLYPHS={
  elec:'<path d="m13 2-8 12h6l-1 8 9-12h-6z"/>'
 };
 const uiIcon=id=>`<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${UI_GLYPHS[id]||UI_GLYPHS.shop}</svg>`;
+
+function bootErrorHTML(message){return `<section class="boot-screen boot-error" aria-busy="false"><div class="boot-brand"><span class="boot-symbol">П</span><b>ПИТ</b></div><div class="boot-visual" aria-hidden="true"><span class="boot-core">П</span></div><div class="boot-copy"><h1>Пока не удалось подключиться</h1><p>${E(message)}</p></div><div class="boot-status" role="status"><span class="boot-spinner" aria-hidden="true"></span><div><strong>Ваш сервис временно недоступен</strong><small>Можно повторить подключение. Без связи записи и изменения недоступны.</small></div></div><button class="primary wide" type="button" data-boot-retry>Повторить подключение</button></section>`;}
+const bootWaitTimer=setTimeout(()=>{const note=document.getElementById('boot-note');if(note)note.textContent='Подключение занимает больше времени. Можно подождать или повторить.';const retry=document.getElementById('boot-retry');if(retry)retry.hidden=false;},10000);
+document.addEventListener('pit-ready',()=>clearTimeout(bootWaitTimer),{once:true});
+document.addEventListener('click',event=>{if(event.target.closest?.('[data-boot-retry],#boot-retry')){event.preventDefault();event.stopImmediatePropagation();location.reload();}},true);
+
+const serviceDisplayName=n=>E(n==='Развал-схождение'?'Развал / схождение':n);
+const servicePriceLine=(price,min,from=false)=>`<span class="keep-together">${from?'от ':''}${money(price)}</span> <span class="keep-together">· ${min} мин</span>`;

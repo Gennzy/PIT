@@ -32,7 +32,7 @@
     },
     {
       "source": "/",
-      "destination": "/api/index?_pit_path=/"
+      "destination": "/assets/launch.html"
     }
   ],
   "headers": [

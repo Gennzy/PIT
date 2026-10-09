@@ -33,3 +33,7 @@ test('34 owner and client receive real private PDFs',async()=>{for(const who of 
 test('35 another client cannot download the order',async()=>{assert.equal((await document('other',bookingId)).status,404);});
 test('36 session from another STO cannot download a PDF',async()=>{assert.equal((await document('owner',bookingId,'garage-b')).status,401);});
 test('37 missing order returns 404 instead of an empty PDF',async()=>{assert.equal((await document('owner','non-existent')).status,404);});
+
+test('38 entry selects the configured STO without exposing private data',async()=>{const r=await fetch(base+'/api/entry');assert.equal(r.status,200);const data=await r.json();assert.equal(data.path,'/app/garage-a');assert.deepEqual(Object.keys(data),['path']);});
+test('39 per-STO manifests launch the correct service',async()=>{for(const slug of ['garage-a','garage-b']){const r=await fetch(base+'/api/t/'+slug+'/manifest.webmanifest');assert.equal(r.status,200);assert(r.headers.get('content-type').includes('application/manifest+json'));const m=await r.json();assert.equal(m.start_url,'/app/'+slug);assert.equal(m.scope,'/');assert.equal(m.display,'standalone');assert.equal(m.icons.length,2);assert(!JSON.stringify(m).includes('cameraUrls'));}});
+test('40 invalid tenant manifest cannot leak another service',async()=>{const r=await fetch(base+'/api/t/no-such-sto/manifest.webmanifest');assert.equal(r.status,404);});

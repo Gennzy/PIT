@@ -435,6 +435,11 @@ async function api(req, res, url) {
       }),
     });
   }
+  if (p[1] === "entry" && req.method === "GET") {
+    const t = (process.env.STO_SLUG && await get("SELECT * FROM tenants WHERE slug=?", process.env.STO_SLUG)) || await get("SELECT * FROM tenants ORDER BY slug LIMIT 1");
+    if (!t) fail(503, "Сервис ещё не настроен");
+    return json(res, {path:"/app/"+t.slug});
+  }
   if (p[1] === "catalog") return json(res, catalogue);
   if (p[1] !== "t" || !p[2]) fail(404, "Маршрут не найден");
   const t = await tenantBySlug(p[2]),
@@ -442,6 +447,11 @@ async function api(req, res, url) {
     action = p[3],
     method = req.method;
   let id = p[4];
+  if (action === "manifest.webmanifest" && method === "GET") {
+    res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache");
+    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#0a0e16",theme_color:"#0a0e16",lang:"ru",icons:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
+  }
   if (action === "public" && method === "GET") {
     const { cameraUrls, ...conf } = c;
     return json(res, { slug: t.slug, config: conf });
@@ -1279,6 +1289,20 @@ async function handle(req, res) {
         features: ["order-pdf"],
         database: process.env.DATABASE_URL ? "configured" : "not-configured",
       });
+    // Public shells do not need a database connection. Private data still uses authenticated APIs.
+    if (/^\/(app|admin)\/[a-z0-9-]+\/?$/.test(url.pathname) || url.pathname.startsWith("/assets/") || url.pathname === "/") {
+      let shell;
+      if (url.pathname === "/") shell=path.join(ROOT,"pit/launch.html");
+      else if (url.pathname.startsWith("/assets/")) {
+        shell=path.resolve(ROOT,"pit",decodeURIComponent(url.pathname.slice(8)));
+        if (!shell.startsWith(path.join(ROOT,"pit")+path.sep)) fail(403,"Запрещено");
+      } else shell=path.join(ROOT,"pit",url.pathname.startsWith("/admin/")?"admin.html":"index.html");
+      if (!fs.existsSync(shell) || !fs.statSync(shell).isFile()) fail(404,"Файл не найден");
+      res.setHeader("Content-Type",mime[path.extname(shell)]||"application/octet-stream");
+      res.setHeader("Cache-Control","no-cache");
+      if (shell.endsWith("sw.js")) res.setHeader("Service-Worker-Allowed","/");
+      return fs.createReadStream(shell).pipe(res);
+    }
     await ensureReady();
     if (url.pathname.startsWith("/api/")) return await api(req, res, url);
     if (url.pathname === "/qr") {
