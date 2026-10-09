@@ -1,11 +1,19 @@
-Этап 1: заказ-наряд PDF, версия 6.1.0.
-Изменённые/новые файлы:
+ПИТ 6.2.0: дизайн + PDF. Устанавливать в корень репозитория с заменой.
+Инструкция: UPDATE-DESIGN.md
+Новые/изменённые файлы:
+DESIGN-TEST-REPORT.md
 PDF-TEST-REPORT.md
 README.md
+UPDATE-DESIGN.md
 UPDATE-STAGE-1.md
 package.json
+pit/admin.html
 pit/admin.js
 pit/app.js
+pit/design.css
+pit/history.html
+pit/index.html
+pit/motion.js
 pit/shared.js
 pit/sw.js
 server/fonts/LICENSE
@@ -14,5 +22,3 @@ server/order-pdf.js
 server/server.js
 tests/api.test.js
 tests/pdf.test.js
-
-Не менять переменные окружения. SQL повторно не запускать. Инструкция: UPDATE-STAGE-1.md

@@ -21,3 +21,21 @@ function loginHTML(admin=false,register=false){return `<div class="login card"><
 async function photoData(file){if(!file)return null;if(file.size>3*1024*1024)throw Error('Фото не больше 3 МБ');if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Выберите JPEG, PNG или WebP');return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
 
 async function downloadOrderPDF(id){const r=await fetch('/api/t/'+encodeURIComponent(STO)+'/documents/'+encodeURIComponent(id),{credentials:'same-origin'});if(!r.ok){let message='Не удалось сформировать PDF';try{message=(await r.json()).error||message;}catch{}throw Error(message);}const blob=await r.blob();if(!r.headers.get('content-type')?.includes('application/pdf'))throw Error('Сервер не вернул PDF');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='pit-order-'+String(id).replace(/[^a-zA-Z0-9-]/g,'')+'.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);toast('PDF заказ-наряда готов');}
+
+// Small vector UI icons, with real labels on their buttons.
+const UI_GLYPHS={
+ bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>',
+ home:'<path d="m3 10 9-7 9 7v10H3zM9 20v-7h6v7"/>',
+ visits:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16m-11 5h6"/>',
+ garage:'<path d="m3 10 9-7 9 7v11H3zM6 21v-9h12v9M6 16h12"/>',
+ shop:'<path d="M4 10V5h16v5M3 10h18v11H3zM8 5V3h8v2M9 15h6m-3-3v6"/>',
+ to:'<path d="M8 4h8l1 4 3 3v10H4V11l3-3zM8 4V2m2 0h4M9 13h6m-3-3v6"/>',
+ diag:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="m6 12 3-4 3 7 3-5 3 2M8 21h8m-4-3v3"/>',
+ brakes:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v2m8 6h-2m-6 8v-2m-8-6h2"/>',
+ susp:'<path d="M9 2h6M12 2v4m-4 0 8 3-8 3 8 3-8 3h8M12 18v4m-3 0h6"/>',
+ tire:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m12 8-3 6h6z"/>',
+ align:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M4 10h6m4 0h6m-8 4v6"/>',
+ ac:'<path d="M12 2v20M3.3 7l17.4 10M3.3 17l17.4-10M9 4l3 3 3-3m-6 16 3-3 3 3"/>',
+ elec:'<path d="m13 2-8 12h6l-1 8 9-12h-6z"/>'
+};
+const uiIcon=id=>`<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${UI_GLYPHS[id]||UI_GLYPHS.shop}</svg>`;
