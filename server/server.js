@@ -6,6 +6,7 @@ const http = require("node:http"),
   crypto = require("node:crypto");
 const QRCode = require("./qr");
 const security = require("./security");
+const workshop = require("./workshop");
 const { get, all, run, transaction, close: closeDB, testing } = require("./db");
 const ROOT = path.resolve(__dirname, "..");
 const {zone,civilDate,localMinutes}=require("./tenant-time");
@@ -253,10 +254,10 @@ async function booking(u, id) {
     fail(404, "Заказ не найден");
   return b;
 }
-async function expanded(b) {
+async function expanded(b,actor) {
   const v = await get("SELECT data FROM vehicles WHERE id=?", b.vehicle);
   const u = await get("SELECT name,phone FROM users WHERE id=?", b.user_id);
-  return { ...b, data: J(b.data), vehicleData: J(v.data), client: u };
+  return { ...b, data: workshop.forRole(J(b.data),actor?.role), vehicleData: J(v.data), client: u };
 }
 async function saveBooking(b, d, status = b.status) {
   await run(
@@ -483,8 +484,14 @@ async function api(req, res, url) {
     return json(res, publicUser(u));
   }
   const u = await auth(req, t);
+  if(action==="workshop" && method==="GET"){
+    await auth(req,t,["master","owner"]);
+    const {cameraUrls,...config}=c;
+    return json(res,{config,staff:await all("SELECT id,name,role FROM users WHERE tenant=? AND role IN ('owner','master') ORDER BY name",t.id),bookings:await Promise.all((await all("SELECT * FROM bookings WHERE tenant=? ORDER BY date,start",t.id)).map(b=>expanded(b,u))),syncedAt:now()});
+  }
+
   if (action === "documents" && method === "GET") {
-    const b = await expanded(await booking(u, id));
+    const b = await expanded(await booking(u, id),u);
     const pdf = require("./order-pdf").orderPDF(c, b);
     const filename =
       "pit-order-" + String(b.id).replace(/[^a-zA-Z0-9-]/g, "") + ".pdf";
@@ -794,7 +801,7 @@ async function api(req, res, url) {
               t.id,
             );
       if (id) bs = bs.filter((b) => b.id === id);
-      return json(res, await Promise.all(bs.map(expanded)));
+      return json(res, await Promise.all(bs.map(b=>expanded(b,u))));
     }
     if (method === "POST") {
       const b = await await body(req),
@@ -820,6 +827,7 @@ async function api(req, res, url) {
         works: Object.fromEntries(q.items.map((i) => [i.id, "wait"])),
       };
       if (!data.phone) fail(400, "Укажите контактный телефон");
+      workshop.record(data,u,{op:"create"},{},{date,start,post:0});
       await transaction(async () => {
         const slot = (await schedule(t, date, duration)).find(
           (s) => s.start === start,
@@ -845,7 +853,7 @@ async function api(req, res, url) {
         );
         await audit(u, "booking.create", newId);
       });
-      return json(res, await expanded(await booking(u, newId)), 201);
+      return json(res, await expanded(await booking(u, newId),u), 201);
     }
     if (method === "PATCH") {
       const b = await booking(u, id),
@@ -855,7 +863,21 @@ async function api(req, res, url) {
         await transaction(async () => {
           const current = await booking(u, id),
             d = J(current.data);
-          if (input.op === "cancel") {
+          workshop.revision(d,input,["assign","post"].includes(input.op));
+          if(input.op==="assign"){
+            await auth(req,t,["master","owner"]);
+            if(!["booked","working"].includes(current.status))fail(409,"Назначение доступно только в активном заказе");
+            const staff=input.assigneeId?await get("SELECT id,name,role FROM users WHERE id=? AND tenant=? AND role IN ('owner','master')",String(input.assigneeId),t.id):null;
+            if(input.assigneeId&&!staff)fail(400,"Выберите сотрудника этого СТО");
+            d.assigned=staff||null;await saveBooking(current,d);
+          } else if(input.op==="post"){
+            await auth(req,t,["master","owner"]);
+            if(current.status!=="booked")fail(409,"Пост меняют до приёмки автомобиля");
+            const post=integer(input.post,1,c.posts);
+            if(await get("SELECT id FROM bookings WHERE tenant=? AND post=? AND date=? AND id<>? AND status IN ('booked','working') AND start<? AND start+duration>?",t.id,post,current.date,current.id,current.start+current.duration,current.start))fail(409,"Этот пост занят в выбранное время");
+            if(post!==current.post&&await get("SELECT id FROM bookings WHERE tenant=? AND post=? AND status='working'",t.id,post)&&current.date<=localDate(0,c.timezone))fail(409,"Пост занят текущим заказом");
+            await run("UPDATE bookings SET post=? WHERE id=? AND tenant=?",post,current.id,t.id);
+          } else if (input.op === "cancel") {
             if (!["booked", "waitlist"].includes(current.status))
               fail(409, "Можно отменить только будущую запись");
             await saveBooking(current, d, "cancelled");
@@ -1060,8 +1082,11 @@ async function api(req, res, url) {
               t.id,
             );
           } else fail(400, "Операция не поддерживается");
+          const changed=await booking(u,current.id),updated=J(changed.data);
+          workshop.record(updated,u,input,current,changed);
+          await saveBooking(changed,updated);
           await audit(u, "booking." + input.op, current.id);
-          return await expanded(await booking(u, id));
+          return await expanded(await booking(u, id),u);
         }),
       );
     }
