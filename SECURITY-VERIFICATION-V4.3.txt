@@ -1,0 +1,7 @@
+Version 6.4.3 / security update V4.3
+85/85 tests passed; npm run build passed.
+19 security tests added.
+Real browser: MFA entry, invalid OTP error, short password + valid OTP, private no-store response, responsive widths 320/390/768/1440.
+Visual QA: login, OTP error, authenticated platform; desktop and mobile, 6 frames inspected.
+Supabase migration 005 NOT executed; production NOT deployed.
+Setup and recovery: SECURITY-SETUP-V4.3.md

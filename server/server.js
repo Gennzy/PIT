@@ -5,6 +5,7 @@ const http = require("node:http"),
   path = require("node:path"),
   crypto = require("node:crypto");
 const QRCode = require("./qr");
+const security = require("./security");
 const { get, all, run, transaction, close: closeDB, testing } = require("./db");
 const ROOT = path.resolve(__dirname, "..");
 const {zone,civilDate,localMinutes}=require("./tenant-time");
@@ -325,38 +326,7 @@ async function schedule(t, date, duration, exclude = null) {
   }
   return out;
 }
-const testRates = new Map();
-async function limit(req) {
-  const address = String(
-    req.headers["x-vercel-forwarded-for"] ||
-      req.socket?.remoteAddress ||
-      "unknown",
-  )
-    .split(",")[0]
-    .trim();
-  const key = crypto
-    .createHmac(
-      "sha256",
-      process.env.AUTH_RATE_SECRET || process.env.PLATFORM_ADMIN_SECRET || process.env.OWNER_PASSWORD || "test-only",
-    )
-    .update(address)
-    .digest("hex");
-  let hits;
-  if (testing) {
-    const old = testRates.get(key) || { at: Date.now(), hits: 0 };
-    if (Date.now() - old.at > 600000) {
-      old.at = Date.now();
-      old.hits = 0;
-    }
-    hits = ++old.hits;
-    testRates.set(key, old);
-  } else {
-    hits = (await await get("SELECT pit.consume_rate_limit(?) AS hits", key))
-      .hits;
-  }
-  if (hits > 60)
-    fail(429, "Слишком много попыток входа. Повторите через 10 минут");
-}
+const limit = security.createLimiter({get,testing});
 async function body(req) {
   if (req.body !== undefined) {
     const v =
@@ -471,8 +441,9 @@ async function api(req, res, url) {
   }
   if (action === "login" || action === "register") {
     if (method !== "POST") fail(405, "Используйте POST");
-    await limit(req);
+    await limit(req,undefined,"tenant",res);
     const b = await await body(req);
+    await limit(req,String(b.email||""),"tenant:"+t.id,res);
     const em = email(b.email),
       pw = password(b.password);
     let u = await get(
@@ -506,7 +477,7 @@ async function api(req, res, url) {
     );
     res.setHeader(
       "Set-Cookie",
-      `pit_session=${tok}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800${process.env.COOKIE_SECURE === "true" ? "; Secure" : ""}`,
+      `pit_session=${tok}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800${security.secureCookie() ? "; Secure" : ""}`,
     );
     await audit(u, "login", u.id);
     return json(res, publicUser(u));
@@ -552,7 +523,7 @@ async function api(req, res, url) {
       );
     res.setHeader(
       "Set-Cookie",
-      "pit_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0",
+      `pit_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0${security.secureCookie()?"; Secure":""}`,
     );
     return json(res, { ok: true });
   }
@@ -1273,6 +1244,8 @@ const mime = {
 const platform=require("./platform")({get,all,run,transaction,uid,now,fail,text,email,password,hash,slug,body,json,limit,defaults,configValidate,createTenant});
 async function handle(req, res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
+  if(security.production())res.setHeader("Strict-Transport-Security","max-age=31536000");
+  if(req.url.startsWith("/api/"))res.setHeader("Cache-Control","no-store");
   res.setHeader("Referrer-Policy", "same-origin");
   res.setHeader("X-Frame-Options", "SAMEORIGIN");
   res.setHeader(

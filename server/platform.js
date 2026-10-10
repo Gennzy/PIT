@@ -1,5 +1,6 @@
 "use strict";
 const crypto = require("node:crypto");
+const security = require("./security");
 const digest = (v) => crypto.createHash("sha256").update(v).digest("hex");
 module.exports = function platform(d) {
   const {
@@ -28,12 +29,15 @@ module.exports = function platform(d) {
       key = process.env.PLATFORM_ADMIN_SECRET;
     if (!em || !pw || pw.length > 128 || !key)
       fail(503, "Панель платформы не настроена. Задайте отдельный email, непустой пароль (до 128 символов) и непустой секрет на сервере.");
+    let mfa;
+    try {mfa=security.mfaSettings();} catch {fail(503,"Для входа администратора настройте PLATFORM_TOTP_SECRET на сервере. Используйте ключ из генератора MFA.");}
     return {
+      mfa,
       email: email(em),
       password: pw,
       fingerprint: crypto
         .createHmac("sha256", key)
-        .update(em.toLowerCase() + "\0" + pw)
+        .update(em.toLowerCase() + "\0" + pw + (mfa.required?"\0mfa:"+mfa.canonical:""))
         .digest("hex"),
     };
   }
@@ -42,7 +46,7 @@ module.exports = function platform(d) {
       /(?:^|;\s*)pit_platform=([a-f0-9]{64})(?:;|$)/,
     )?.[1];
   const cookie = (v, age) =>
-    `pit_platform=${v}; HttpOnly; SameSite=Strict; Path=/api/platform; Max-Age=${age}${process.env.COOKIE_SECURE === "true" || process.env.NODE_ENV === "production" || process.env.VERCEL ? "; Secure" : ""}`;
+    `pit_platform=${v}; HttpOnly; SameSite=Strict; Path=/api/platform; Max-Age=${age}${security.secureCookie() ? "; Secure" : ""}`;
   async function auth(req) {
     const c = credentials(),
       t = token(req);
@@ -192,10 +196,12 @@ module.exports = function platform(d) {
   async function route(req, res, url) {
     const p = url.pathname.split("/").filter(Boolean).slice(2),
       method = req.method;
+    if(p[0]==="security" && method==="GET")return json(res,{mfaRequired:security.mfaRequired()});
     if (p[0] === "login" && method === "POST") {
       const c = credentials();
-      await limit(req);
+      await limit(req,undefined,"platform",res);
       const b = await body(req);
+      await limit(req,String(b.email||""),"platform",res);
       const valid = crypto.timingSafeEqual(
         Buffer.from(digest(String(b.password || "")), "hex"),
         Buffer.from(digest(c.password), "hex"),
@@ -206,9 +212,15 @@ module.exports = function platform(d) {
           .toLowerCase() !== c.email ||
         !valid
       )
-        fail(401, "Неверный email или пароль");
+        fail(401,c.mfa.required?"Неверные данные входа или код подтверждения":"Неверный email или пароль");
+      const step=c.mfa.required?security.matchTotp(c.mfa.secret,b.otp):null;
+      if(c.mfa.required&&step===null)fail(401,"Неверные данные входа или код подтверждения");
       const t = crypto.randomBytes(32).toString("hex");
       await transaction(async () => {
+        if(c.mfa.required){
+          const claimed=await run("INSERT INTO platform_mfa_replay AS used(credential,last_step,updated) VALUES(?,?,?) ON CONFLICT(credential) DO UPDATE SET last_step=excluded.last_step,updated=excluded.updated WHERE used.last_step<excluded.last_step",c.fingerprint,step,now());
+          if(claimed.rowCount!==1)fail(401,"Этот код уже использован. Дождитесь нового кода в приложении-аутентификаторе");
+        }
         await run("DELETE FROM platform_sessions WHERE expires<?", Date.now());
         await run(
           "INSERT INTO platform_sessions(token,credential,expires) VALUES(?,?,?)",

@@ -7,6 +7,7 @@ const P = {
   branch: null,
   audit: [],
   logo: null,
+  mfaRequired: true,
 };
 const root = document.getElementById("platform-root");
 const E = (v) =>
@@ -199,7 +200,7 @@ function logs() {
   );
 }
 function login() {
-  return `<main class="platform-login"><div class="platform-login-mark"><span class="pit-app-brand" role="img" aria-label="ПИТ"><img class="pit-app-mark" src="/assets/brand/mark-3d.svg" alt="" width="40" height="40"><img class="pit-app-wordmark" src="/assets/brand/wordmark-white.svg" alt="" width="84" height="30"></span><span>PLATFORM</span></div><p class="eyebrow">УПРАВЛЕНИЕ ПРОДУКТОМ</p><h1>Вход администратора платформы</h1><p class="muted">Отдельный доступ для подключения компаний. Email и пароль владельца СТО здесь не работают.</p><form id="platform-auth">${input("Email администратора", "email", "", "email", 'required autocomplete="username"')}${input("Пароль администратора", "password", "", "password", 'required maxlength="128" autocomplete="current-password"')}<button type="submit" class="primary wide">Войти в платформу</button>${err}</form><p class="platform-note">Доступ задаётся в защищённом окружении сервера. Публичной регистрации администраторов нет.</p></main>`;
+  return `<main class="platform-login"><div class="platform-login-mark"><span class="pit-app-brand" role="img" aria-label="ПИТ"><img class="pit-app-mark" src="/assets/brand/mark-3d.svg" alt="" width="40" height="40"><img class="pit-app-wordmark" src="/assets/brand/wordmark-white.svg" alt="" width="84" height="30"></span><span>PLATFORM</span></div><p class="eyebrow">УПРАВЛЕНИЕ ПРОДУКТОМ</p><h1>Вход администратора платформы</h1><p class="muted">Отдельный доступ для подключения компаний. Email и пароль владельца СТО здесь не работают.</p><form id="platform-auth">${input("Email администратора", "email", "", "email", 'required autocomplete="username"')}${input("Пароль администратора", "password", "", "password", 'required maxlength="128" autocomplete="current-password"')}${P.mfaRequired?`<div class="platform-mfa"><label class="field"><span>Код из приложения-аутентификатора</span><input name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required placeholder="000000" aria-describedby="mfa-hint"></label><p id="mfa-hint" class="muted">Введите текущий 6-значный код. Код меняется каждые 30 секунд; использованный код нельзя применять повторно.</p></div>`:""}<button type="submit" class="primary wide">Войти в платформу</button>${err}</form><p class="platform-note">Доступ задаётся в защищённом окружении сервера. Публичной регистрации администраторов нет.</p></main>`;
 }
 function render() {
   if (!P.user) {
@@ -339,6 +340,8 @@ document.addEventListener("submit", async (event) => {
   try {
     if (f.getAttribute("id") === "platform-auth") {
       P.user = await api("login", "POST", v);
+      f.querySelector('[name=password]').value="";
+      if(f.querySelector('[name=otp]'))f.querySelector('[name=otp]').value="";
       await refresh();
       show("list");
       return;
@@ -464,9 +467,12 @@ document.addEventListener("submit", async (event) => {
   } catch (e) {
     if (error) error.textContent = e.message;
     else toast(e.message, true);
-    if (e.status === 401) {
+    if(f.getAttribute("id")==="platform-auth"){
+      const otp=f.querySelector('[name=otp]');if(otp)otp.value="";
+    } else if (e.status === 401) {
       P.user = null;
       render();
+      const message=root.querySelector(".form-error");if(message)message.textContent=e.message;
     }
   } finally {
     if (b.isConnected) b.disabled = false;
@@ -529,6 +535,8 @@ document.addEventListener("change", async (event) => {
 });
 (async () => {
   try {
+    const policy=await api("security");
+    P.mfaRequired=policy.mfaRequired;
     P.user = await api("me");
     await refresh();
     render();

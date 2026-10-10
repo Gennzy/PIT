@@ -739,3 +739,5 @@
     grid-column: 1/-1;
   }
 }
+
+.platform-mfa{margin:8px 0 24px;padding:20px;border:1px solid #343438;border-radius:12px;background:#111113}.platform-mfa .field{margin-bottom:12px}.platform-mfa input{font-variant-numeric:tabular-nums;letter-spacing:6px;font-size:24px}.platform-mfa .muted{font-size:14px;line-height:1.6}

@@ -16,6 +16,7 @@ if (testing) {
 const TABLES = new Set([
   "companies",
   "platform_sessions",
+  "platform_mfa_replay",
   "platform_audit",
   "tenants",
   "users",
