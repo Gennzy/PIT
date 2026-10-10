@@ -463,7 +463,7 @@ async function api(req, res, url) {
   if (action === "manifest.webmanifest" && method === "GET") {
     res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
     res.setHeader("Cache-Control", "no-cache");
-    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:c.shortName||"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#090909",theme_color:"#090909",lang:"ru",icons:c.logo?[{src:c.logo,sizes:"512x512",type:"image/png"}]:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
+    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#090909",theme_color:"#090909",lang:"ru",icons:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
   }
   if (action === "public" && method === "GET") {
     const { cameraUrls, ...conf } = c;

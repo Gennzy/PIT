@@ -1,0 +1,18 @@
+/* PIT product identity is independent of tenant colors and logos. */
+.pit-app-brand{display:inline-flex;align-items:center;gap:10px;flex:0 0 auto;vertical-align:middle;line-height:1;letter-spacing:normal;color:#f6f6f7}
+.pit-app-brand .pit-app-mark{display:block;position:static;inset:auto;width:40px;height:40px;flex:0 0 40px;object-fit:contain;padding:0;filter:none;transform:none;border-radius:0}
+.pit-app-brand .pit-app-wordmark{display:block;position:static;inset:auto;width:84px;height:30px;flex:0 0 84px;object-fit:contain;padding:0;filter:none;transform:none;border-radius:0}
+.boot-brand{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.boot-brand>.pit-app-brand{margin-right:auto}
+.login-brand{gap:16px;flex-wrap:wrap;align-items:center;letter-spacing:normal}.login-brand .pit-app-brand{gap:10px}
+.pit-brand{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.pit-brand .owner-label{margin-left:auto}
+.platform-logo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.platform-logo>small{margin-left:auto}
+.platform-login-mark{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.platform-loading .pit-app-brand{margin-bottom:24px}
+.app-product-brand{display:flex;align-items:center;padding:12px 0 16px;margin-bottom:16px;border-bottom:1px solid #343438}
+.app-product-brand .pit-app-mark{width:30px;height:30px;flex-basis:30px}.app-product-brand .pit-app-wordmark{width:67px;height:24px;flex-basis:67px}
+.history-product-brand{max-width:800px;margin:0 auto;padding:24px 24px 0}
+@media(max-width:380px){.login-brand small{font-size:10px;letter-spacing:.5px}.login-brand{gap:8px}.login-brand .pit-app-mark{width:32px;height:32px;flex-basis:32px}.login-brand .pit-app-wordmark{width:67px;height:24px;flex-basis:67px}.platform-logo{gap:8px}.boot-label{letter-spacing:1px}}
+
+.platform-login-mark>.pit-app-brand{border:0;padding:0;border-radius:0}
+
+@media(max-width:760px){.history-product-brand{padding:24px 16px 0}}

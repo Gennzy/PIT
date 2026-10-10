@@ -222,7 +222,8 @@ test("P06 validated brand and schedule update with revisions", async () => {
   assert.equal(pub.config.name, "Север · Основной");
   assert.equal(pub.config.timezone, "Asia/Yekaterinburg");
   const manifest = ok(await t("anon", "north-auto", "manifest.webmanifest"));
-  assert.equal(manifest.short_name, "Север ПИТ");
+  assert.equal(manifest.short_name, "ПИТ");
+  assert.ok(manifest.icons.every(i=>i.src.startsWith("/assets/icons/")));
   assert.equal(
     (
       await p("platform", "companies/" + A.id + "/branches/north-auto", "PUT", {
