@@ -7,6 +7,7 @@ const http = require("node:http"),
 const QRCode = require("./qr");
 const { get, all, run, transaction, close: closeDB, testing } = require("./db");
 const ROOT = path.resolve(__dirname, "..");
+const {zone,civilDate,localMinutes}=require("./tenant-time");
 process.env.TZ = process.env.TZ || "Europe/Moscow";
 const uid = () => crypto.randomUUID(),
   now = () => new Date().toISOString(),
@@ -19,6 +20,9 @@ const defaults = {
   addr: "",
   phone: "",
   accent: "#EC0618",
+  timezone: process.env.TZ || "Europe/Moscow",
+  shortName: "ПИТ",
+  logo: null,
   posts: 3,
   open: 540,
   close: 1260,
@@ -118,13 +122,20 @@ async function notify(u, message, tenant) {
 function cfg(t) {
   return J(t.config);
 }
+function validZone(v){try{return zone(v);}catch{fail(400,"Укажите корректный часовой пояс IANA, например Europe/Moscow");}}
+function validLogo(v){if(v==null||v==="")return null;if(typeof v!=="string"||v.length>1400000||!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(v))fail(400,"Логотип: PNG 512×512, до 1 МБ");const b=Buffer.from(v.split(",")[1],"base64");if(b.length>1048576||b.length<33||b.subarray(0,8).toString("hex")!=="89504e470d0a1a0a"||b.subarray(12,16).toString()!=="IHDR"||b.readUInt32BE(16)!==512||b.readUInt32BE(20)!==512)fail(400,"Логотип: PNG 512×512, до 1 МБ");return v;}
 function configValidate(c) {
+  if(!c || typeof c!=="object" || Array.isArray(c))fail(400,"Ожидались настройки филиала");
+  if(!text(c.name,80))fail(400,"Название филиала обязательно");
   const out = {
     ...defaults,
     name: text(c.name, 80),
     addr: text(c.addr || "", 200),
     phone: text(c.phone || "", 40),
     accent: c.accent,
+    timezone: validZone(c.timezone || process.env.TZ || "Europe/Moscow"),
+    shortName: text(c.shortName || c.name || "ПИТ",24),
+    logo: validLogo(c.logo),
     posts: integer(c.posts, 1, 16),
     open: integer(c.open, 0, 1410),
     close: integer(c.close, 30, 1440),
@@ -200,6 +211,7 @@ async function createTenant(code, conf, ownerKey, owner) {
 async function tenantBySlug(s) {
   const t = await get("SELECT * FROM tenants WHERE slug=?", s);
   if (!t) fail(404, "СТО не найдено");
+  await platform.ensureAccess(t.owner_key);
   return t;
 }
 async function session(req) {
@@ -254,7 +266,7 @@ async function saveBooking(b, d, status = b.status) {
     b.tenant,
   );
 }
-function checkDate(d) {
+function checkDate(d, c) {
   if (
     typeof d !== "string" ||
     !/^\d{4}-\d{2}-\d{2}$/.test(d) ||
@@ -262,16 +274,13 @@ function checkDate(d) {
     new Date(d).toISOString().slice(0, 10) !== d
   )
     fail(400, "Неверная дата");
-  const today = localDate();
-  if (d < today || d > localDate(180))
+  const today = localDate(0,c.timezone);
+  if (d < today || d > localDate(180,c.timezone))
     fail(400, "Запись возможна на ближайшие 180 дней");
   return d;
 }
-function localDate(offset = 0) {
-  const d = new Date();
-  d.setDate(d.getDate() + offset);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
+function localDate(offset=0,timeZone=process.env.TZ){return civilDate(offset,timeZone||"Europe/Moscow");}
+
 function quote(c, body) {
   if (!Array.isArray(body.services) || !body.services.length)
     fail(400, "Выберите услугу");
@@ -294,7 +303,7 @@ function quote(c, body) {
 async function schedule(t, date, duration, exclude = null) {
   const c = cfg(t),
     out = [];
-  if (!c.days.includes(new Date(date + "T12:00:00").getDay())) return out;
+  if (!c.days.includes(new Date(date + "T12:00:00Z").getUTCDay())) return out;
   const list = (
     await all(
       "SELECT * FROM bookings WHERE tenant=? AND date=? AND status NOT IN ('cancelled','completed','waitlist')",
@@ -302,9 +311,9 @@ async function schedule(t, date, duration, exclude = null) {
       date,
     )
   ).filter((b) => b.id !== exclude);
-  const minute = new Date().getHours() * 60 + new Date().getMinutes();
+  const minute = localMinutes(c.timezone || process.env.TZ);
   for (let s = c.open; s + duration <= c.close; s += 30) {
-    if (date === localDate() && s <= minute) continue;
+    if (date === localDate(0,c.timezone) && s <= minute) continue;
     const post = Array.from({ length: c.posts }, (_, i) => i + 1).find(
       (p) =>
         !list.some(
@@ -328,7 +337,7 @@ async function limit(req) {
   const key = crypto
     .createHmac(
       "sha256",
-      process.env.AUTH_RATE_SECRET || process.env.OWNER_PASSWORD || "test-only",
+      process.env.AUTH_RATE_SECRET || process.env.PLATFORM_ADMIN_SECRET || process.env.OWNER_PASSWORD || "test-only",
     )
     .update(address)
     .digest("hex");
@@ -392,6 +401,7 @@ function image(v) {
 async function tenantTransaction(t, f) {
   return transaction(async () => {
     const fresh = await get("SELECT revision FROM tenants WHERE id=?", t.id);
+    await platform.ensureAccess(t.owner_key);
     if (!fresh || fresh.revision !== t.revision)
       fail(409, "Настройки СТО изменились. Обновите страницу");
     return f();
@@ -407,6 +417,9 @@ async function api(req, res, url) {
       Date.now(),
     );
     if (!s) fail(404, "Ссылка истекла или отозвана");
+    const sharedTenant=await get("SELECT owner_key FROM tenants WHERE id=?",s.tenant);
+    if(!sharedTenant)fail(404,"Сервис не найден");
+    await platform.ensureAccess(sharedTenant.owner_key);
     const v = await get(
       "SELECT data FROM vehicles WHERE id=? AND tenant=?",
       s.vehicle,
@@ -450,7 +463,7 @@ async function api(req, res, url) {
   if (action === "manifest.webmanifest" && method === "GET") {
     res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
     res.setHeader("Cache-Control", "no-cache");
-    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#090909",theme_color:"#090909",lang:"ru",icons:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
+    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:c.shortName||"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#090909",theme_color:"#090909",lang:"ru",icons:c.logo?[{src:c.logo,sizes:"512x512",type:"image/png"}]:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
   }
   if (action === "public" && method === "GET") {
     const { cameraUrls, ...conf } = c;
@@ -588,6 +601,7 @@ async function api(req, res, url) {
           ).some((x) => x.post > conf.posts)
         )
           fail(409, "Нельзя убрать пост с активными записями");
+        if(conf.timezone!==(c.timezone||process.env.TZ)&&await get("SELECT id FROM bookings WHERE tenant=? AND status IN ('booked','working') LIMIT 1",t.id))fail(409,"Перед сменой часового пояса завершите или перенесите активные записи");
         await run(
           "UPDATE tenants SET config=?,revision=revision+1 WHERE id=?",
           JSON.stringify(conf),
@@ -614,16 +628,14 @@ async function api(req, res, url) {
       const b = await await body(req);
       if (await get("SELECT id FROM tenants WHERE slug=?", slug(b.slug)))
         fail(409, "Код СТО занят");
-      const nt = await transaction(
-        async () =>
-          await createTenant(
-            slug(b.slug),
-            { ...defaults, name: text(b.name, 80) },
-            t.owner_key,
-            u,
-          ),
-      );
-      await audit(u, "tenant.create", nt.id);
+      const nt = await transaction(async () => {
+        await platform.ensureAccess(t.owner_key);
+        if (await get("SELECT id FROM tenants WHERE slug=?",slug(b.slug)))fail(409,"Код СТО занят");
+        const created=await createTenant(slug(b.slug),{ ...defaults,timezone:c.timezone||process.env.TZ,accent:c.accent,logo:c.logo,shortName:c.shortName,name:text(b.name,80) },t.owner_key,u);
+        await run("UPDATE companies SET revision=revision+1,updated=? WHERE id=?",now(),t.owner_key);
+        await audit(u,"tenant.create",created.id);
+        return created;
+      });
       return json(res, { slug: nt.slug }, 201);
     }
   }
@@ -776,7 +788,7 @@ async function api(req, res, url) {
   }
   if (action === "slots" && method === "POST") {
     const b = await await body(req),
-      date = checkDate(b.date);
+      date = checkDate(b.date,c);
     if (b.exclude) {
       const previous = await booking(u, b.exclude);
       if (previous.status !== "booked")
@@ -817,7 +829,7 @@ async function api(req, res, url) {
       const b = await await body(req),
         v = await vehicle(u, b.vehicle),
         q = quote(c, b),
-        date = checkDate(b.date),
+        date = checkDate(b.date,c),
         duration = q.items.reduce((s, x) => s + x.min, 0),
         price = q.items.reduce((s, x) => s + x.price, 0),
         start = integer(b.start, 0, 1439),
@@ -901,7 +913,7 @@ async function api(req, res, url) {
           } else if (input.op === "reschedule") {
             if (current.status !== "booked")
               fail(409, "Перенос доступен до приёмки");
-            const date = checkDate(input.date),
+            const date = checkDate(input.date,c),
               start = integer(input.start, 0, 1439);
             const slot = (
               await schedule(t, date, current.duration, current.id)
@@ -925,7 +937,7 @@ async function api(req, res, url) {
             await auth(req, t, ["master", "owner"]);
             if (current.status !== "booked")
               fail(409, "Заказ уже принят или закрыт");
-            if (current.date > localDate())
+            if (current.date > localDate(0,c.timezone))
               fail(409, "Приёмка только в день визита");
             if (
               await get(
@@ -1258,6 +1270,7 @@ const mime = {
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
 };
+const platform=require("./platform")({get,all,run,transaction,uid,now,fail,text,email,password,hash,slug,body,json,limit,defaults,configValidate,createTenant});
 async function handle(req, res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Referrer-Policy", "same-origin");
@@ -1290,9 +1303,10 @@ async function handle(req, res) {
         database: process.env.DATABASE_URL ? "configured" : "not-configured",
       });
     // Public shells do not need a database connection. Private data still uses authenticated APIs.
-    if (/^\/(app|admin)\/[a-z0-9-]+\/?$/.test(url.pathname) || url.pathname.startsWith("/assets/") || url.pathname === "/") {
+    if (/^\/(app|admin)\/[a-z0-9-]+\/?$/.test(url.pathname) || url.pathname.startsWith("/assets/") || url.pathname === "/" || url.pathname === "/platform") {
       let shell;
-      if (url.pathname === "/") shell=path.join(ROOT,"pit/launch.html");
+      if (url.pathname === "/platform") shell=path.join(ROOT,"pit/platform.html");
+      else if (url.pathname === "/") shell=path.join(ROOT,"pit/launch.html");
       else if (url.pathname.startsWith("/assets/")) {
         shell=path.resolve(ROOT,"pit",decodeURIComponent(url.pathname.slice(8)));
         if (!shell.startsWith(path.join(ROOT,"pit")+path.sep)) fail(403,"Запрещено");
@@ -1303,6 +1317,7 @@ async function handle(req, res) {
       if (shell.endsWith("sw.js")) res.setHeader("Service-Worker-Allowed","/");
       return fs.createReadStream(shell).pipe(res);
     }
+    if(url.pathname.startsWith("/api/platform/"))return await platform.route(req,res,url);
     await ensureReady();
     if (url.pathname.startsWith("/api/")) return await api(req, res, url);
     if (url.pathname === "/qr") {

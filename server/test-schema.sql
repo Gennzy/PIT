@@ -13,3 +13,6 @@ CREATE INDEX IF NOT EXISTS vehicle_owner ON vehicles(tenant,user_id);
 CREATE INDEX IF NOT EXISTS notes_owner ON notifications(tenant,user_id);
 
 CREATE TABLE IF NOT EXISTS photos(id TEXT PRIMARY KEY,tenant TEXT NOT NULL,booking TEXT NOT NULL,object_path TEXT NOT NULL,mime TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS companies(id TEXT PRIMARY KEY,name TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'active',access_until TEXT,created TEXT NOT NULL,updated TEXT NOT NULL,revision INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE IF NOT EXISTS platform_sessions(token TEXT PRIMARY KEY,credential TEXT NOT NULL,expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS platform_audit(id TEXT PRIMARY KEY,actor TEXT NOT NULL,action TEXT NOT NULL,target TEXT NOT NULL,created TEXT NOT NULL);

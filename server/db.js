@@ -14,6 +14,9 @@ if (testing) {
   sqlite.exec(fs.readFileSync(path.join(__dirname, "test-schema.sql"), "utf8"));
 }
 const TABLES = new Set([
+  "companies",
+  "platform_sessions",
+  "platform_audit",
   "tenants",
   "users",
   "sessions",

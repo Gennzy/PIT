@@ -11,6 +11,10 @@
   },
   "rewrites": [
     {
+      "source": "/platform",
+      "destination": "/api/index?_pit_path=/platform"
+    },
+    {
       "source": "/api/:path*",
       "destination": "/api/index?_pit_path=/api/:path*"
     },

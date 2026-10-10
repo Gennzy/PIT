@@ -1,28 +1,10 @@
-REDESIGN-FILES.txt
-REDESIGN-V2.md
-pit/admin.html
-pit/app.js
+Изменения относительно поставленного V2:
 pit/design.css
-pit/history.html
-pit/icons/icon-192.png
-pit/icons/icon-512.png
-pit/icons/icon.svg
-pit/img/services/ac.webp
-pit/img/services/align.webp
-pit/img/services/brakes.webp
-pit/img/services/diag.webp
-pit/img/services/elec.webp
-pit/img/services/susp.webp
-pit/img/services/tire.webp
-pit/img/services/to.webp
-pit/index.html
-pit/install.js
-pit/launch.html
-pit/manifest.webmanifest
-pit/motion.js
 pit/shared.js
 pit/sw.js
-redesign-preview/admin-overview.png
-redesign-preview/client-home.png
+REDESIGN-V3.md
+REDESIGN-FILES.txt
+redesign-preview/home.png
 redesign-preview/services.png
-server/server.js
+redesign-preview/admin.png
+Удалён устаревший REDESIGN-V2.md
