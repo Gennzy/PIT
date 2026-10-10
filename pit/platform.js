@@ -199,7 +199,7 @@ function logs() {
   );
 }
 function login() {
-  return `<main class="platform-login"><div class="platform-login-mark">ПИТ <span>PLATFORM</span></div><p class="eyebrow">УПРАВЛЕНИЕ ПРОДУКТОМ</p><h1>Вход администратора платформы</h1><p class="muted">Отдельный доступ для подключения компаний. Email и пароль владельца СТО здесь не работают.</p><form id="platform-auth">${input("Email администратора", "email", "", "email", 'required autocomplete="username"')}${input("Пароль администратора", "password", "", "password", 'required minlength="16" maxlength="128" autocomplete="current-password"')}<button type="submit" class="primary wide">Войти в платформу</button>${err}</form><p class="platform-note">Доступ задаётся в защищённом окружении сервера. Публичной регистрации администраторов нет.</p></main>`;
+  return `<main class="platform-login"><div class="platform-login-mark">ПИТ <span>PLATFORM</span></div><p class="eyebrow">УПРАВЛЕНИЕ ПРОДУКТОМ</p><h1>Вход администратора платформы</h1><p class="muted">Отдельный доступ для подключения компаний. Email и пароль владельца СТО здесь не работают.</p><form id="platform-auth">${input("Email администратора", "email", "", "email", 'required autocomplete="username"')}${input("Пароль администратора", "password", "", "password", 'required maxlength="128" autocomplete="current-password"')}<button type="submit" class="primary wide">Войти в платформу</button>${err}</form><p class="platform-note">Доступ задаётся в защищённом окружении сервера. Публичной регистрации администраторов нет.</p></main>`;
 }
 function render() {
   if (!P.user) {

@@ -26,12 +26,8 @@ module.exports = function platform(d) {
     const em = process.env.PLATFORM_ADMIN_EMAIL,
       pw = process.env.PLATFORM_ADMIN_PASSWORD,
       key = process.env.PLATFORM_ADMIN_SECRET;
-    if (!em || !pw || pw.length < 16 ||
-      pw.length > 128 || !key || key.length < 32)
-      fail(
-        503,
-        "Панель платформы не настроена. Задайте отдельный email, пароль от 16 символов и секрет от 32 символов на сервере.",
-      );
+    if (!em || !pw || pw.length > 128 || !key)
+      fail(503, "Панель платформы не настроена. Задайте отдельный email, непустой пароль (до 128 символов) и непустой секрет на сервере.");
     return {
       email: email(em),
       password: pw,

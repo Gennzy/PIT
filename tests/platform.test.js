@@ -526,3 +526,26 @@ test("P18 missing platform credentials fail closed before database access", asyn
     }
   }
 });
+
+
+test("P19 short admin password and short secret authenticate; wrong password is denied", async () => {
+ const crypto=require("node:crypto"),keys=["PLATFORM_ADMIN_EMAIL","PLATFORM_ADMIN_PASSWORD","PLATFORM_ADMIN_SECRET"],old=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
+ try {
+  process.env.PLATFORM_ADMIN_EMAIL=admin.email;process.env.PLATFORM_ADMIN_PASSWORD="short";process.env.PLATFORM_ADMIN_SECRET="tiny";
+  const stored=new Map();let cookie="";
+  const module=require("../server/platform")({email:v=>v,fail:(status,msg)=>{throw Object.assign(Error(msg),{status})},limit:async()=>{},transaction:async fn=>fn(),body:async req=>req.data,run:async(sql,...args)=>{if(sql.startsWith("INSERT INTO platform_sessions"))stored.set(args[0],{credential:args[1],expires:args[2]})},get:async(sql,token)=>stored.get(token),uid:()=>crypto.randomUUID(),now:()=>new Date().toISOString(),json:(_,v)=>v});
+  const res={setHeader:(name,value)=>{if(name==="Set-Cookie")cookie=value}},url=new URL("http://local/api/platform/login");
+  const result=await module.route({method:"POST",headers:{},data:{email:admin.email,password:"short"}},res,url);
+  assert.equal(result.email,admin.email);assert(cookie.includes("HttpOnly"));
+  const me=await module.route({method:"GET",headers:{cookie:cookie.split(";")[0]}},{},new URL("http://local/api/platform/me"));assert.equal(me.email,admin.email);
+  await assert.rejects(()=>module.route({method:"POST",headers:{},data:{email:admin.email,password:"wrong"}},res,url),e=>e.status===401);
+ } finally {for(const k of keys){if(old[k]===undefined)delete process.env[k];else process.env[k]=old[k];}}
+});
+test("P20 blank admin password or secret remain disabled; browser no longer requires 16",async()=>{
+ const keys=["PLATFORM_ADMIN_EMAIL","PLATFORM_ADMIN_PASSWORD","PLATFORM_ADMIN_SECRET"],old=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
+ try {
+  const module=require("../server/platform")({email:v=>v,fail:(status,msg)=>{throw Object.assign(Error(msg),{status})}});
+  for(const values of [["","tiny"],["short",""]]){process.env.PLATFORM_ADMIN_EMAIL=admin.email;process.env.PLATFORM_ADMIN_PASSWORD=values[0];process.env.PLATFORM_ADMIN_SECRET=values[1];await assert.rejects(()=>module.route({method:"GET",headers:{}},{},new URL("http://local/api/platform/me")),e=>e.status===503);}
+  const js=fs.readFileSync(path.resolve(__dirname,"../pit/platform.js"),"utf8");const login=js.slice(js.indexOf("function login()"),js.indexOf("function render()"));assert(!login.includes('minlength="16"'));assert(login.includes('maxlength="128"'));
+ } finally {for(const k of keys){if(old[k]===undefined)delete process.env[k];else process.env[k]=old[k];}}
+});
