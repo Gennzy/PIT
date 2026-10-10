@@ -72,7 +72,7 @@
     if(!/^#[a-f\d]{6}$/i.test(accent))return;
     const channels=[1,3,5].map(i=>parseInt(accent.slice(i,i+2),16));
     const l=luminance(channels),white=1.05/(l+.05),dark=(l+.05)/.05;
-    document.documentElement.style.setProperty('--accent-ink',white>=dark?'#ffffff':'#000000');
+    document.documentElement.style.setProperty('--accent-ink',white>=4.5?'#ffffff':'#000000');
     const top=channels.map(v=>Math.round(white>=dark?v*.95:v*.95+255*.05));
     document.documentElement.style.setProperty('--accent-top','rgb('+top.join(',')+')');
   }

@@ -51,5 +51,13 @@ document.addEventListener('click',event=>{if(event.target.closest?.('[data-boot-
 const serviceDisplayName=n=>E(n==='Развал-схождение'?'Развал / схождение':n);
 const servicePriceLine=(price,min,from=false)=>`<span class="keep-together">${from?'от ':''}${money(price)}</span> <span class="keep-together">· ${min} мин</span>`;
 
-// Shared service tile preserves the original data-service action.
-const serviceTile=(x,i)=>`<button class="card service-card" data-service="${E(x.id)}"><span class="service-index">${String(i+1).padStart(2,'0')} / СЕРВИС</span><span class="service-arrow" aria-hidden="true">↗</span><span class="service-mark">${uiIcon(x.id)}</span><b>${serviceDisplayName(x.n)}</b><small>${servicePriceLine(x.price,x.min,true)}</small></button>`;
+// Local illustrative product photography. Unknown/custom services use the generic UI icon.
+// These images identify the service category, never a customer's actual damaged part.
+const SERVICE_PHOTOS=Object.freeze({to:'to',diag:'diag',brakes:'brakes',susp:'susp',tire:'tire',align:'align',ac:'ac',elec:'elec'});
+const servicePhoto=x=>SERVICE_PHOTOS[x.id]?`<img class="service-photo" src="/assets/img/services/${SERVICE_PHOTOS[x.id]}.webp" alt="" loading="lazy" decoding="async">`:`<span class="service-fallback" aria-hidden="true">${uiIcon(x.id)}</span>`;
+// Keep the original data-service identity and event handler.
+const serviceTile=(x,i)=>`<button class="card service-card" data-service="${E(x.id)}"><span class="service-index" aria-hidden="true">${String(i+1).padStart(2,'0')}</span><b>${serviceDisplayName(x.n)}</b>${servicePhoto(x)}<small>${servicePriceLine(x.price,x.min,true)}</small><span class="service-arrow" aria-hidden="true">↗</span></button>`;
+const serviceStage=(rows,full=false)=>`<section class="service-stage${full?' service-stage-full':''}" aria-labelledby="services-title"><header class="service-heading"><span class="service-chip">Точный подход к вашей машине</span><h2 id="services-title">Услуги</h2><p>От планового обслуживания<br>до сложного ремонта.</p></header><div class="service-grid">${rows.map(serviceTile).join('')}</div></section>`;
+// Keep arbitrary model names readable, including manual entries and long generations.
+const heroName=v=>(v.model||'ПИТ').trim().split(/\s+/)[0].slice(0,18);
+const heroNameClass=v=>heroName(v).length>8?'hero-word-long':heroName(v).length>4?'hero-word-medium':'';
