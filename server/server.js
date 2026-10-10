@@ -18,7 +18,7 @@ const defaults = {
   name: "Мой автосервис",
   addr: "",
   phone: "",
-  accent: "#EC0618",
+  accent: "#8050EE",
   posts: 3,
   open: 540,
   close: 1260,
@@ -450,7 +450,7 @@ async function api(req, res, url) {
   if (action === "manifest.webmanifest" && method === "GET") {
     res.setHeader("Content-Type", "application/manifest+json; charset=utf-8");
     res.setHeader("Cache-Control", "no-cache");
-    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#0a0e16",theme_color:"#0a0e16",lang:"ru",icons:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
+    return res.end(JSON.stringify({name:"ПИТ · "+c.name,short_name:"ПИТ",id:t.slug===(process.env.STO_SLUG||"pit")?"/pit-v5":"/app/"+t.slug,start_url:"/app/"+t.slug,scope:"/",display:"standalone",background_color:"#101014",theme_color:"#101014",lang:"ru",icons:[{src:"/assets/icons/icon-192.png",sizes:"192x192",type:"image/png"},{src:"/assets/icons/icon-512.png",sizes:"512x512",type:"image/png"}]}));
   }
   if (action === "public" && method === "GET") {
     const { cameraUrls, ...conf } = c;
